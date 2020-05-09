@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .center {
+            box-sizing: border-box;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid lightblue;
+            background: lightcyan;
+            margin: auto;
+        }
+
+        .wrap {
+            display: grid;
+            place-items: center center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="center">水平垂直居中</div>
+    </div>
+</body>
+
+</html>

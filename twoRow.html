@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+.main>div { 
+    float:left;
+    position: relative;
+    height: 100px; 
+}
+.middle { 
+    width: 100%;
+    background-color: lightgreen 
+}
+.left { 
+   width:200px;
+   margin-left:-100%;
+   background-color:#b0f9c2 
+}
+.right { 
+   width: 200px;
+   margin-left:-200px;
+   background-color:pink 
+}
+.middle-inner{
+   margin:0 200px; 
+   background-color: burlywood; 
+   height:100px;
+}
+
+
+
+</style>
+
+<body>
+    <div class="main">
+        <div class="middle">
+                <div class="middle-inner">中间</div>
+        </div>
+        <div class="left">左边</div>
+        <div class="right">右边</div>
+    </div>
+</body>
+
+</html>

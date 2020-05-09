@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+var lengthOfLongestSubstring = function(s) {
+    if(!s.length) return 0;
+    let noDumps = [s[0]]   // 无重复得字符数组，初始放置第一个字符
+    let res = 1
+    Array.from(s).forEach((v,i)=>{
+        let index = noDumps.indexOf(v)
+        if(index<0){
+            noDumps.push(v)
+        }else{
+            res = res>noDumps.length?res:noDumps.length
+            noDumps.splice(0,index+1)
+            noDumps.push(v)
+        }
+    })
+    console.log(noDumps)
+    return res>noDumps.length?res:noDumps.length
+};
+lengthOfLongestSubstring("abcabcbb")
+    </script>
+</body>
+</html>
