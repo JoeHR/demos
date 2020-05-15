@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进度条和擦光效果</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        svg {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="box-li">
+            <svg x="0" y="0" width="320" height="20" viewbox="0 0 320 20">
+                <defs>
+                    <lineargradient id="rect-line" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#0054cd" />
+                        <stop offset="100%" stop-color="#08fdff" />
+                    </lineargradient>
+                </defs>
+                <!-- <polygon fill="url('#rect-line')" points="0,0 320,0 310,20 0 20" /> -->
+                <mask id="progress-list-li-mask">
+                    <polygon fill="#fff" points="0,0 320,0 310,20 0 20" />
+                </mask>
+                <mask id="progress-list-li-rect">
+                    <rect width="0" height="20" fill="#fff">
+                        <animate attributeName="width" from="0" to="320" dur="1s" fill="freeze" />
+                    </rect>
+                </mask>
+                <g mask="progress-list-li-mask">
+                    <polygon mask="url('#progress-list-li-rect')" fill="url('#rect-line')"
+                        points="0,0 320,0 310,20 0 20" />
+                    <rect style="mix-blend-mode:screen;" width="60" height="20" x="273" fill="#fff">
+                        <animate attributeName="x" values="-60; 320; 320" keyTimes="0;0.2;1" dur="4s" fill="freeze"
+                            repeatCount="indefinite" />
+                    </rect>
+                </g>
+            </svg>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    [data-user]{
+        color:red
+    }
+    [data-user*=user1]{
+        font-size:28px;
+    }
+    #div:after{
+      content:attr(data-user-name);
+      display:block;
+      width:100px;
+      height:100px;
+      zoom:1;
+    }
+  </style>
+</head>
+<body>
+  <div id="div" data-user="user1" data-birth-of-date>213131</div>
+</body>
+
+<script>
+var div = document.getElementById('div')
+
+div.dataset.birthOfDate = '2000-12-01'
+
+console.log(div.dataset)    // DOMStringMap {birthOfDate:'2000-12-01',user:"user1"}
+
+console.log(div.dataset.birthOfDate)  // 2000-12-01
+
+div.dataset.userName="zhangsan"
+
+console.log(div.dataset)  // DOMStringMap {birthOfDate:'2000-12-01',user:"user1"，userName:"zhangsan"}
+</script>
+
+</html>
