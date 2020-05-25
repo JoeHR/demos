@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <script>
+    Function.prototype.mycall = function(content){
+      if(typeof this !=='function') throw new Error('not')
+
+      content=content||window // 绑定上下文，没有则默认window
+
+      let args = [...arguments].slice(1)
+
+      content.fn = this
+
+      const result  = content.fn(...args)
+
+      delete content.fn
+
+      return result
+    }
+
+    Function.prototype.myapply = function(content){
+      if(typeof this !=='function') throw new Error('not')
+
+      content = content || window
+
+      let args = arguments[1]||[]
+
+      content.fn = this
+
+      const result  = content.fn(...args)
+
+      delete content.fn
+
+      return result
+    }
+
+    Function.prototype.mybind = function(content){
+      if(typeof this !=='function') throw new Error('not function')
+
+      content = content || window
+
+      const _self = this
+
+      const args = [...arguments].slice(1)
+
+      let bound = function(){
+        let finalArgs = [...arguments].concat(args)
+        
+        if(this instanceof bound){
+            // 原型继承
+        if(_self.prototype){
+          this.prototype = Object.create(_self.prototype)
+        }
+
+        let result = this.apply(this,finalArgs)
+        let isObject = typeof result === 'object' && result !==null
+        let isFunction  = typeof result === 'function'
+        if(isObject || isFunction) return result
+        }
+  
+        return _self.apply(content,finalArgs)
+      }
+      
+      return bound
+    }
+
+    const module = {
+      x:42,
+      getX:function(){
+        console.log(this.x)
+      }
+    }
+
+    module.getX.myapply(null)
+    module.getX.mycall(null)
+    module.getX.myapply(module)
+    module.getX.mycall(module)
+    module.getX.mybind(module)()
+  
+  </script>
+</body>
+</html>
