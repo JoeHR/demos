@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="text/javascript" src="//api.map.baidu.com/api?v=3.0&ak=Ctr4CyeSsmGpHr6Lwrh5bthz8wbCfm4G"></script>
+</head>
+<style>
+  *{
+    margin:0;
+    padding:0;
+  }
+  #map{
+    width:100vw;
+    height:100vh;
+  }
+</style>
+<body>
+  <div class="" id="map"></div>
+</body>
+
+<script type="text/javascript">
+  // 起点
+  const start = [120.19061036265043,30.188794625820872]  
+  // 终点
+  const end = [120.216839,30.1789]
+  // 折线配置
+  let lineOps = { enableEditing: false,enableClicking: true,strokeColor:'#1ad86f',strokeOpacity:1,strokeWeight:6,strokeStyle:'solid'}
+
+  // 转换坐标
+  const toLngLat = function(pointArr){
+    return new BMap.Point(Number(pointArr[0]),Number(pointArr[1]))
+  }
+
+  // 途径点
+  const pause = [["120.19061036265043","30.188794625820872"],["120.19061036265043","30.188794625820872"],["120.19061036265043","30.188794625820872"],["120.19090495567362","30.18889980583523"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19075483734015","30.189175112731494"],["120.19075483734015","30.189175112731494"],["120.19075483734015","30.189175112731494"],["120.19048780372748","30.18947498074485"],["120.19073785476385","30.189175043403008"],["120.19073785476385","30.189175043403008"],["120.19073785476385","30.189175043403008"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19064726386935","30.188856756898094"],["120.19064726386935","30.188856756898094"],["120.19064726386935","30.188856756898094"],["120.19092499825227","30.188835906742206"],["120.19092499825227","30.188835906742206"],["120.19092499825227","30.188835906742206"],["120.19074076015528","30.18926703255754"],["120.19074076015528","30.18926703255754"],["120.19074076015528","30.18926703255754"],["120.19092731619392","30.189517748489017"],["120.19092731619392","30.189517748489017"],["120.19121801178605","30.18950203113048"],["120.19121801178605","30.18950203113048"],["120.19121801178605","30.18950203113048"],["120.19151000284538","30.189167479716755"],["120.19151000284538","30.189167479716755"],["120.19151000284538","30.189167479716755"],["120.19154832972087","30.188793757242184"],["120.19154832972087","30.188793757242184"],["120.19155029032532","30.188830757632385"],["120.19155029032532","30.188830757632385"]]
+
+  // 创建地图
+  let map = new BMap.Map('map',{enableMapClick: true});
+  map.centerAndZoom('杭州', 11)
+  map.enableScrollWheelZoom(true)
+
+  // 骑行规划实例
+  let WILLRIDING = new BMap.RidingRoute(map,{renderOptions:{map:map,selectFirstResult:true,autoViewport:true},onMarkersSet:(pois)=>{
+    map.removeOverlay(pois[0].marker)
+    map.removeOverlay(pois[1].marker)
+  }})
+
+  // 绘制规划的路径
+  const setWilldRiding = function(start,end){
+    WILLRIDING.search(start,end)
+  }
+
+  // 绘制折线
+  const drawLine = function (path) {
+    let line = new BMap.Polyline(path,lineOps)
+    map.addOverlay(line)
+  }
+
+  // 绘制骑行
+  const getPathPromise = function (start,end){
+    let RIDING = new BMap.RidingRoute(map)
+    return new Promise((resolve,reject)=>{
+      RIDING.search(start,end)
+      RIDING.setSearchCompleteCallback((result)=>{
+        if(RIDING.getStatus()===0){
+          let plan = result.getPlan(0)
+          let route = plan.getRoute(0)
+          let path = route.getPath()
+          resolve(path)
+        }else{
+          resolve([])
+        }
+      })
+    })
+  }
+  
+  
+  const drivingRiding = function(){
+    let arr = [start,...pause,end]
+    let promises = []
+    arr.reduce((collect,v) =>{
+      if(collect.length){
+        let len = collect.length 
+        if(len === arr.length - 1){
+          WILLRIDING.search(toLngLat(collect[len-1]),toLngLat(v))
+        }else {
+          promises.push(getPathPromise(toLngLat(collect[len-1]),toLngLat(v)))
+        }
+      }
+      collect.push(v)
+      return collect
+    },[])
+    Promise.all(promises).then((values)=>{
+      let path = []
+      values.reduce((c,v)=>{
+        c.push(...v)
+        return c
+      },path)
+      drawLine(path)
+    })
+  }
+
+  
+drivingRiding()
+</script>

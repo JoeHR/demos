@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=0242049babcd80ab16388aff150f46b1&plugin=AMap.Geolocation,AMap.PlaceSearch,AMap.Geocoder,AMap.Riding"></script>
+</head>
+<style>
+  *{
+    margin:0;
+    padding:0;
+  }
+  #gmap{
+    width:100vw;
+    height:100vh;
+  }
+</style>
+<body>
+  <div class="" id="gmap"></div>
+</body>
+
+<script type="text/javascript">
+  function BMapToGeo(bd_lng, bd_lat) {
+    bd_lng = Number(bd_lng)
+    bd_lat = Number(bd_lat)
+    const X_PI = Math.PI * 3000.0 / 180
+    const x = bd_lng - 0.0065
+    const y = bd_lat - 0.006
+    const z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * X_PI)
+    const theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * X_PI)
+    const gg_lng = z * Math.cos(theta)
+    const gg_lat = z * Math.sin(theta);
+    return [gg_lng, gg_lat]
+  }
+  // 起点
+  const start = [120.19061036265043,30.188794625820872]  
+  // 终点
+  const end = [120.216839,30.1789]
+  // 折线配置
+  const lineOps = {isOutline:'#ffeeff',borderWeight:3,strokeColor:'#3366FF',strokeOpacity:1,strokeWeight:6,strokeStyle:'solid',strokeDasharray:[10,5],lineJoin:'round',lineCap:'round'}
+
+  // 转换坐标
+  const toLngLat = function(pointArr){
+    let point = BMapToGeo(...pointArr)
+    return new AMap.LngLat(point[0],point[1])
+  }
+
+  // 途径点
+  const pause = [["120.19061036265043","30.188794625820872"],["120.19061036265043","30.188794625820872"],["120.19061036265043","30.188794625820872"],["120.19090495567362","30.18889980583523"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19075483734015","30.189175112731494"],["120.19075483734015","30.189175112731494"],["120.19075483734015","30.189175112731494"],["120.19048780372748","30.18947498074485"],["120.19073785476385","30.189175043403008"],["120.19073785476385","30.189175043403008"],["120.19073785476385","30.189175043403008"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19084693712381","30.18897954195358"],["120.19064726386935","30.188856756898094"],["120.19064726386935","30.188856756898094"],["120.19064726386935","30.188856756898094"],["120.19092499825227","30.188835906742206"],["120.19092499825227","30.188835906742206"],["120.19092499825227","30.188835906742206"],["120.19074076015528","30.18926703255754"],["120.19074076015528","30.18926703255754"],["120.19074076015528","30.18926703255754"],["120.19092731619392","30.189517748489017"],["120.19092731619392","30.189517748489017"],["120.19121801178605","30.18950203113048"],["120.19121801178605","30.18950203113048"],["120.19121801178605","30.18950203113048"],["120.19151000284538","30.189167479716755"],["120.19151000284538","30.189167479716755"],["120.19151000284538","30.189167479716755"],["120.19154832972087","30.188793757242184"],["120.19154832972087","30.188793757242184"],["120.19155029032532","30.188830757632385"],["120.19155029032532","30.188830757632385"]]
+
+  // 创建地图
+  const map = new AMap.Map('gmap');
+
+  // 骑行规划实例
+  const WILLRIDING = new AMap.Riding({map:map,hideMarkers:true,autoFitView:true})
+
+  // 骑行实例
+  const RIDING = new AMap.Riding({hideMarkers:true,autoFitView:true})
+
+  // 绘制规划的路径
+  const setWilldRiding = function(start,end){
+    WILLRIDING.search(start,end)
+  }
+
+  // 绘制折线
+  const drawLine = function (path) {
+    const line = new AMap.Polyline(lineOps)
+    line.setPath(path)
+    line.setMap(map)
+  }
+
+  // 绘制骑行
+  const getPathPromise = function (start,end){
+    return new Promise((resolve,reject)=>{
+      RIDING.search(start,end,(status,result)=>{
+        if(status==='complete'){
+          const path = result.routes[0].rides.reduce((c,v)=>{
+            c.push(...v.path)
+            return c
+          },[])
+          resolve(path)
+        }else{status==='error'}{
+          reject(status)
+        }
+      })
+    })
+  }
+  
+  
+  const drivingRiding = function(){
+    const arr = [start,...pause,end]
+    const promises = []
+    arr.reduce((collect,v) =>{
+      if(collect.length){
+        const len = collect.length 
+        if(len === arr.length - 1){
+          setWilldRiding(toLngLat(collect[len-1]),toLngLat(v))
+        }else {
+          promises.push(getPathPromise(toLngLat(collect[len-1]),toLngLat(v)))
+        }
+      }
+      collect.push(v)
+      return collect
+    },[])
+    Promise.all(promises).then((values)=>{
+      const path = []
+      values.reduce((c,v)=>{
+        c.push(...v)
+        // drawLine(v)
+        return c
+      },path)
+      drawLine(path)
+    })
+  }
+
+  const testClick = function (){
+    const marker = new AMap.Marker({
+        icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
+        position: BMapToGeo(...["120.19121801178605","30.18950203113048"]),
+        offset: new AMap.Pixel(-13, -30)
+    });
+    marker.on('click',(e)=>{alert('您在 [ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ] 的位置点击了marker！')})
+    marker.setMap(map);
+
+  }
+
+
+
+  drivingRiding()
+
+  testClick()
+
+  
+
+
+  
+
+
+</script>
+</html>
