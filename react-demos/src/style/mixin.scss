@@ -1,0 +1,83 @@
+$blue: #3190e8;
+$bc: #e4e4e4;
+$fc:#fff;
+$common-left: 0.2rem;
+$common-right: 0.6rem;
+
+
+
+// 元素长宽
+@mixin wh($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+//字体大小，颜色
+@mixin sc($size, $color){
+	font-size: $size;
+	color: $color;
+}
+
+//定位上下左右居中
+@mixin center {  
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//定位上下居中
+@mixin ct {  
+	position: absolute;
+	top: 50%;
+    transform: translateY(-50%);
+}
+
+//flex 布局和 子元素 对其方式
+@mixin fj($type: space-between){
+	display: flex;
+	justify-content: $type;
+}
+
+//字体大小、行高、字体
+@mixin font($size, $line-height, $family: 'Microsoft YaHei') {  
+	font: #{$size}/#{$line-height} $family;
+}
+
+// flex布局
+@mixin flex($justify-content: center, $align-items: center) {
+  display: flex;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+// 默认按照父元素的剧中
+@mixin positionCenter($position: absolute) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+
+// 默认按照父元素的剧中
+@mixin positionHCenter($position: absolute) {
+  position: $position;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+@mixin positionLeft($position: absolute, $left: $common-left) {
+  position: $position;
+  top: 50%;
+  left: $left;
+  transform: translate3d(0, -50%, 0);
+}
+
+@mixin positionRight($position: absolute, $right: $common-right) {
+  position: $position;
+  top: 50%;
+  right: $right;
+  transform: translate3d(0, -50%, 0);
+}
+
