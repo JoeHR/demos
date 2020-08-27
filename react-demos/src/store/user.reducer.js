@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 20:59:17
- * @LastEditTime: 2020-08-19 09:21:03
+ * @LastEditTime: 2020-08-26 11:10:30
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -17,8 +17,16 @@ let defaultState = {
   temMessage: '', //临时姓名
   hasAddressList: [], // 已有的地址
   operate: 'edit',
-  userInfo: {},
-  geohash: []
+  userInfo: null,
+  geohash: '31.22299,121.36025',
+  latitude: '', // 当前位置纬度
+  longitude: '', // 当前位置经度
+  newAddress: [], //确认订单页新的地址
+  searchAddress: null,//搜索并选择的地址
+  choosedAddress: null,//选择地址
+  addressIndex: null,//选择地址的索引值
+  removeAddress:[],//移除地址
+	addAddress:'',		//新增地址
 }
 
 export default (state = defaultState, action = { }) => {
@@ -32,6 +40,12 @@ export default (state = defaultState, action = { }) => {
       return {...state,...{[action.datatype]:action.value}}
     case user.MODIFY_USERINFO:
       return {...state,userInfo: {...state.userInfo,[action.key]:action.value}}
+    case user.SAVE_REMOVEADDRESS:
+      return {...state,removeAddress:action.removeAddress}
+    case user.SAVE_ADDADDRESS:
+      return {...state,removeAddress:[action.addAddress,...state.removeAddress]}
+    case user.SAVE_ADDDETAIL:
+      return {...state,addAddress:action.addAddress}
     default:
       return state
   }

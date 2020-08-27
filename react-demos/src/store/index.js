@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 11:35:09
- * @LastEditTime: 2020-08-18 20:59:02
+ * @LastEditTime: 2020-08-26 14:13:45
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -9,10 +9,16 @@
  * @函数:  - 小驼峰式命名法（前缀应当为动词）
  * @这不是一个 bug，这只是一个未列出来的特性
  */
-import { createStore,applyMiddleware } from 'redux'
+import { createStore, applyMiddleware,combineReducers } from 'redux'
 import userReducer from './user.reducer.js'
+import addressReducer from './address.reducer.js'
 import thunk from 'redux-thunk'
 
-let store = createStore(userReducer,applyMiddleware(thunk))
+const reducer = combineReducers({
+  user:userReducer,
+  address:addressReducer
+})
+
+let store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store

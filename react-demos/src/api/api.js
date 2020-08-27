@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 19:09:59
- * @LastEditTime: 2020-08-21 16:07:55
+ * @LastEditTime: 2020-08-27 11:16:38
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -86,11 +86,61 @@ class API extends Server {
     return this.post('/api/v1/login/app_mobile', params)
   }
 
+  /**
+   * 账号密码登录
+   * @param {*} username 
+   * @param {*} password 
+   * @param {*} captcha_code 
+   */
   async accountLogin (username, password, captcha_code) {
     const params = {username, password, captcha_code }
     return this.post('/api/v2/login', params)
   }
 
+  /**
+   * 退出登录
+   */
+  async signout () {
+    return this.get('/api/v2/signout')
+  }
+
+  /**
+   * 上传头像
+   * @param {*} user_id 
+   * @param {*} data 
+   */
+  uploadAvatar (user_id,data) {
+    return this.post('/api/eus/v1/users/' + user_id + '/avatar', data)
+  }
+  
+  /**
+   * 搜索地址
+   * @param {*} keyword 
+   */
+  searchNearby (keyword) {
+    const params = {type:'nearby',keyword}
+    return this.get('/api/v1/pois',{params})
+  }
+
+  /**
+   * 添加地址
+   * @param {*} userId 
+   * @param {*} address 
+   * @param {*} address_detail 
+   * @param {*} geohash 
+   * @param {*} name 
+   * @param {*} phone 
+   * @param {*} phone_bk 
+   * @param {*} poi_type 
+   * @param {*} sex 
+   * @param {*} tag 
+   * @param {*} tag_type 
+   */
+  postAddAddress (userId, address, address_detail, geohash, message, phone, phone_bk, poi_type, sex, tag, tag_type) {
+    const url = `/api/v1/users/${userId}/addresses`
+    const data = {address, address_detail, geohash, name:message, phone, phone_bk, poi_type, sex, tag, tag_type}
+    return this.post(url,data)
+  }
 }
 
 

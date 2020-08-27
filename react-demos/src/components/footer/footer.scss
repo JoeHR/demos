@@ -17,29 +17,25 @@
     @include flex;
     text-align: center;
     flex-direction: column;
-
-    .icon-changyonglogo40{
-      @include font(1.2rem, #666);
-      margin-top: -0.2rem;
+    @include font(0.6rem, 1.0rem);
+    padding: 0.2rem 0;
+    box-sizing: border-box;
+    .icon-zhoubian{
+      @include font(0.7rem, 0.86rem, 'iconfont');
+      // margin-top: -0.2rem;
     }
     .spec-text{
-      margin-top: -0.2rem;
+      // margin-top: -0.2rem;
     }
-    .icon-zhinanzhen{
-      @include font(0.86rem, #666);
-      margin-top: -0.2rem;
+    .icon-elm{
+      @include font(0.7rem, 0.86rem, 'iconfont');
     }
-    .icon-dingdan{
-      @include font(0.80rem, #666);
-      margin-top: -0.2rem;
+    .icon-dd{
+      @include font(0.70rem, 0.86rem, 'iconfont');
     }
-    .icon-account{
-      @include font(0.80rem, #666);
-      margin-top: -0.2rem;
+    .icon-wode{
+      @include font(0.70rem, 0.86rem, 'iconfont');
       fill: $blue;
-    }
-    span{
-      @include font(.48rem, #666)
     }
   }
 }

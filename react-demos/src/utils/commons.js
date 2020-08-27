@@ -1,7 +1,8 @@
 /*
+import { clearStore } from '@/utils/commons';
  * @Author: rh
  * @Date: 2020-08-19 17:55:49
- * @LastEditTime: 2020-08-19 19:10:53
+ * @LastEditTime: 2020-08-24 20:50:55
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -37,25 +38,33 @@ export const setStore = (name, content) => {
   if (typeof content !== 'string') {
     content = JSON.stringify(content)
   }
-  window.localStorage.setItem(name, content)
+  window.sessionStorage.setItem(name, content)
 }
 
 /**
- * 获取localStorage
+ * 获取sessionStorage
  * @param {*} name 
  */
 export const getStore = name => {
   if(!name) return 
-  return window.localStorage.getItem(name)
+  return JSON.parse(window.sessionStorage.getItem(name)||null)
 }
 
 /**
- * 删除localStorage
+ * 删除sessionStorage
  * @param {*} name 
  */
 export const removeStore = name => {
   if (!name) return
-  window.localStorage.removeItem(name)
+  window.sessionStorage.removeItem(name)
+}
+
+/**
+ * 清空sessionStorage
+ * @param {*} name 
+ */
+export const clearStore = () => {
+  window.sessionStorage.clear()
 }
 
 /**
@@ -65,7 +74,7 @@ export const getImgPath = (path) => {
   //传递过来的图片地址需要处理后才能正常使用(path) {
     let suffix;
     if (!path) {
-      return '//elm.cangdu.org/img/default.jpg'
+      return 'https://elm.cangdu.org/img/default.jpg'
     }
     if (path.indexOf('jpeg') !== -1) {
       suffix = '.jpeg'

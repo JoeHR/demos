@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-20 17:05:14
- * @LastEditTime: 2020-08-21 16:09:49
+ * @LastEditTime: 2020-08-24 11:20:36
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -189,7 +189,7 @@ class Login extends Component {
           !loginWay?
           <Link to='/forget' className='to_forget'>重置密码?</Link>:null
         }
-        {showAlert && <AlertTip showHide={showAlert} closeTip={closeTip.bind(this)} alertText={alertText} />}
+        {showAlert && <AlertTip closeTip={closeTip.bind(this)} alertText={alertText} />}
       </div>
     )
   }

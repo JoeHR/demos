@@ -1,7 +1,7 @@
 /*
  * @Author: rh
- * @Date: 2020-08-18 17:21:50
- * @LastEditTime: 2020-08-24 16:38:15
+ * @Date: 2020-08-24 17:09:09
+ * @LastEditTime: 2020-08-24 17:09:30
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -9,16 +9,4 @@
  * @函数:  - 小驼峰式命名法（前缀应当为动词）
  * @这不是一个 bug，这只是一个未列出来的特性
  */
-const path = require('path')
-const { addDecoratorsLegacy } = require('customize-cra')
-
-function resolve (dir) {
-  return path.join(__dirname, './', dir)
-}
-
-module.exports = function override (config, env) {
-  config.resolve.alias = {
-    '@': resolve('src')
-  }
-  return config
-}
+import * as geo from './action-type'

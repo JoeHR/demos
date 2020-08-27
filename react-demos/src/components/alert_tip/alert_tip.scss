@@ -49,7 +49,7 @@
       }
     }
     .tip-text{
-      @include font(.7rem, #333);
+      @include sc(.7rem, #333);
       line-height: .9rem;
       text-align: center;
       margin-top: .8rem;
@@ -57,16 +57,16 @@
     }
 
     .confirm{
-      @include font(.8rem, #fff);
+      @include sc(.8rem, #fff);
       font-weight: bold;
       margin-top: .8rem;
       background-color: #4cd964;
       width: 100%;
       text-align: center;
-      border: 1px;
       line-height: 1.8rem;
-      border-bottom-left-radius: .25rem;
-      border-bottom-right-radius: .25rem;
+      border: 1px;
+      border-bottom-left-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
     }
     .logout{
       @include flex(space-between);
