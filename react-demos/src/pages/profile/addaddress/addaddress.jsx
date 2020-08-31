@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-25 15:40:00
- * @LastEditTime: 2020-08-27 13:53:11
+ * @LastEditTime: 2020-08-28 10:33:15
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -58,7 +58,8 @@ class AddAddress extends Component{
   }
 
   inputChange = (name,event) => {
-    const {message,mesthree,verifyfour} = this.state
+    const {mesthree,verifyfour} = this.state
+    const message = this.state.message || this.props.address.message
     const newState = {}
     const value = event.target.value
     newState[name] = value
@@ -75,6 +76,7 @@ class AddAddress extends Component{
         newState['verifythree'] = false
         newState['sendaddress'] = ''
       }
+      newState['message'] = message
     }else if(name === 'telenum'){
       if(/^[1][358][0-9]{9}$/.test(value)){
         newState['verifyfour'] = false
@@ -86,6 +88,7 @@ class AddAddress extends Component{
         newState['verifyfour'] = true
         newState['telephone'] = '请输入正确的手机号'
       }
+      newState['message'] = message
     }else if(name === 'standbytelenum') {
       if(/^[1][358][0-9]{9}$/.test(value)){
         newState['verifyfive'] = false
@@ -94,7 +97,9 @@ class AddAddress extends Component{
         newState['verifyfive'] = true
         newState['standbytele'] = '请输入正确的手机号'
       }
+      newState['message'] = message
     }
+
     if(message&&mesthree&&!verifyfour){
       newState['butpart'] = true
     }else{

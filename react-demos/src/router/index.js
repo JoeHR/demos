@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 11:25:26
- * @LastEditTime: 2020-08-26 10:11:13
+ * @LastEditTime: 2020-08-31 14:48:53
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -24,6 +24,8 @@ const ProfileInfoSetUserName = asyncComponent(() => import('@/pages/profile/setu
 const ProfileInfoAddress = asyncComponent(()=>import('@/pages/profile/address/address'))
 const ProfileInfoAddAddress = asyncComponent(()=>import('@/pages/profile/addaddress/addaddress'))
 const ProfileInfoAddAddressDetail = asyncComponent(()=>import('@/pages/profile/adddetail/adddetail'))
+const Forget = asyncComponent(()=>import('@/pages/forget/forget'))
+const Msite = asyncComponent(()=>import('@/pages/msite/msite'))
 
 const ANIMATION_MAP = {
   PUSH: 'forward',
@@ -51,6 +53,8 @@ const Routes = withRouter(({location,history})=>(
       <Route path="/profile/info/address" exact component={ ProfileInfoAddress } />
       <Route path="/profile/info/address/add" exact component={ ProfileInfoAddAddress } />
       <Route path="/profile/info/address/add/addDetail" exact component={ ProfileInfoAddAddressDetail } />
+      <Route path="/forget" exact component={ Forget } />
+      <Route path="/msite" exact component={ Msite } />
       <Redirect exact to='/home' from='/' />
     </Switch>
   </CSSTransition>

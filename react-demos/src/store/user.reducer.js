@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 20:59:17
- * @LastEditTime: 2020-08-26 11:10:30
+ * @LastEditTime: 2020-08-31 16:57:17
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -46,6 +46,10 @@ export default (state = defaultState, action = { }) => {
       return {...state,removeAddress:[action.addAddress,...state.removeAddress]}
     case user.SAVE_ADDDETAIL:
       return {...state,addAddress:action.addAddress}
+    case user.SAVE_USER_GEOHASH:
+      return {...state,geohash:action.geohash}
+    case user.SAVE_USER_ADDRESS:
+      return {...state,...action.address}
     default:
       return state
   }

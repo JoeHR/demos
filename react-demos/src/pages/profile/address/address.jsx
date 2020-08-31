@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-25 14:34:08
- * @LastEditTime: 2020-08-27 13:52:20
+ * @LastEditTime: 2020-08-28 10:47:50
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -20,10 +20,21 @@ import { saveRemoveAddress } from '@/store/action'
 import './address.scss'
 
 class Address extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      deletesite:false, // 是否编辑状态
+      editText:'编辑',
+      removeAddress: props.removeAddress
+    }
+  }
 
-  state={
-    deletesite:false, // 是否编辑状态
-    editText:'编辑',
+  async componentWillMount () {
+    if(this.props.userInfo.user_id){
+      const address = await API.getAddressList(this.props.userInfo.user_id)
+      this.props.saveRemoveAddress(address||[])
+      this.setState({removeAddress:address||[]})
+    }
   }
 
   editThing = () => {
@@ -36,18 +47,19 @@ class Address extends Component {
   }
 
   deleteSite = async (index,item) => {
-    const {userInfo,removeAddress} = this.props
+    const {userInfo} = this.props
+    const {removeAddress} = this.state
     if(userInfo && userInfo.user_id){
       await API.deleteAddress(userInfo.user_id,item.id)
       removeAddress.splice(index,1)
       this.props.saveRemoveAddress(removeAddress)
+      this.setState({removeAddress})
     }
   }
 
   render(){
     const { editThing } = this
-    const { editText,deletesite} = this.state
-    const { removeAddress } = this.props
+    const { editText,deletesite,removeAddress} = this.state
     return (
       <div className='rating_page'> 
         <HeadTop headTitle='编辑地址' goBack={this.props.history.goBack.bind(this)} edit={
@@ -57,7 +69,7 @@ class Address extends Component {
           <ul className='addresslist'>
             {
               removeAddress.map((v,i)=>(
-                <li kye={i}>
+                <li key={v.id}>
                   <div>
                     <p>{v.address}</p>
                     <p><span>{v.phone}</span>{v.phonepk?<span>、{v.phonepk}</span>:null}</p>
@@ -98,7 +110,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    saveRemoveAddress: (removeAddress) => dispatch(saveRemoveAddress(removeAddress))
+    saveRemoveAddress: (removeAddress) => dispatch(saveRemoveAddress(removeAddress)),
   }
 }
 

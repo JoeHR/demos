@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 19:10:24
- * @LastEditTime: 2020-08-27 13:35:25
+ * @LastEditTime: 2020-08-28 10:04:01
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -95,6 +95,14 @@ export default class Server {
       method:'post',
       url,
       data: data
+    })
+  }
+
+  delete(url,data=null){
+    return this.getInstance({
+      method:'delete',
+      url,
+      data:data
     })
   }
 }

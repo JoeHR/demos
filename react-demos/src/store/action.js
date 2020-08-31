@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-19 19:05:49
- * @LastEditTime: 2020-08-27 13:39:51
+ * @LastEditTime: 2020-08-31 10:34:50
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -87,3 +87,24 @@ export const saveAddressPage = address => {
   }
 }
 
+/**
+ * 修改用户的默认经纬度
+ * @param {*} geohash 
+ */
+export const saveUserGeohash = geohash => {
+  return {
+    type: action.SAVE_USER_GEOHASH,
+    geohash
+  }
+}
+
+/**
+ * 修改用户的默认地址
+ * @param {*} address 
+ */
+export const saveUserAddress = address => {
+  return {
+    type: action.SAVE_USER_ADDRESS,
+    address
+  }
+}

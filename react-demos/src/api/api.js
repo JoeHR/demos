@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 19:09:59
- * @LastEditTime: 2020-08-27 11:16:38
+ * @LastEditTime: 2020-08-31 16:40:42
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -140,6 +140,70 @@ class API extends Server {
     const url = `/api/v1/users/${userId}/addresses`
     const data = {address, address_detail, geohash, name:message, phone, phone_bk, poi_type, sex, tag, tag_type}
     return this.post(url,data)
+  }
+
+  /**
+   * 个人中心里搜索地址
+   * @param {*} userId 
+   */
+  getAddressList(userId){
+    const url = `/api/v1/users/${userId}/addresses`
+    return this.get(url)
+  }
+
+  /**
+   * 删除地址
+   * @param {*} userid 
+   * @param {*} addressid 
+   */
+  deleteAddress (userid,addressid) {
+    const url = `/api/v1/users/${userid}/addresses/${addressid}`
+    return this.delete(url,{})
+  }
+
+  /**
+   * 修改密码
+   * @param {*} username 
+   * @param {*} oldpassWord 
+   * @param {*} newpassword 
+   * @param {*} confirmpassword 
+   * @param {*} captcha_code 
+   */
+  changePassword (username, oldpassWord, newpassword, confirmpassword, captcha_code) {
+    return this.post('/api/v2/changepassword',{username, oldpassWord, newpassword, confirmpassword, captcha_code})
+  }
+
+  /**
+   * 获取msite页面地址信息
+   * @param {*} geohash 
+   */
+  msiteAddress (geohash) {
+    return this.get('/api/v2/pois/' + geohash)
+  }
+
+  msiteFoodTypes (geohash) {
+    const params = {geohash,group_type:'1','flags[]':'F'}
+    return this.get('/api/v2/index_entry',{params})
+  }
+
+  shopList (latitude, longitude, offset, restaurant_category_id = '', restaurant_category_ids = '', order_by = '', delivery_mode = '', support_ids = []) {
+    let supportStr = ''
+    support_ids.forEach(item=>{
+      if(item.status){
+        supportStr += '&support_ids[]=' + item.id
+      }
+    })
+    let params = {latitude,
+      longitude,
+      offset,
+      limit: '20',
+      'extras[]': 'activities',
+      keyword: '',
+      restaurant_category_id,
+      'restaurant_category_ids[]': restaurant_category_ids,
+      order_by,
+      'delivery_mode[]': delivery_mode + supportStr};
+    return this.get('/api/shopping/restaurants',{params})
   }
 }
 

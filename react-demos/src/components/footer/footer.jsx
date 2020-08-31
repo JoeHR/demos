@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 20:54:28
- * @LastEditTime: 2020-08-25 11:14:53
+ * @LastEditTime: 2020-08-31 10:01:22
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -44,7 +44,7 @@ class Footer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    geohash: state.geohash
+    geohash: state.user.geohash
   }
 }
 
