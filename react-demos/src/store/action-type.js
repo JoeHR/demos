@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-19 09:10:17
- * @LastEditTime: 2020-08-31 10:24:14
+ * @LastEditTime: 2020-09-03 20:04:31
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -41,3 +41,7 @@ export const SAVE_USER_GEOHASH = 'SAVE_USER_GEOHASH'
 
 // 修改用户的默认地址
 export const SAVE_USER_ADDRESS = 'SAVE_USER_ADDRESS'
+
+// 清空用户商铺的购物车
+export const CLEAR_CART = 'CLEAR_CART'
+

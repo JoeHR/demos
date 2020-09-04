@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 11:25:26
- * @LastEditTime: 2020-08-31 14:48:53
+ * @LastEditTime: 2020-09-01 09:22:34
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -26,6 +26,7 @@ const ProfileInfoAddAddress = asyncComponent(()=>import('@/pages/profile/addaddr
 const ProfileInfoAddAddressDetail = asyncComponent(()=>import('@/pages/profile/adddetail/adddetail'))
 const Forget = asyncComponent(()=>import('@/pages/forget/forget'))
 const Msite = asyncComponent(()=>import('@/pages/msite/msite'))
+const Shop = asyncComponent(()=>import('@/pages/shop/shop'))
 
 const ANIMATION_MAP = {
   PUSH: 'forward',
@@ -55,6 +56,7 @@ const Routes = withRouter(({location,history})=>(
       <Route path="/profile/info/address/add/addDetail" exact component={ ProfileInfoAddAddressDetail } />
       <Route path="/forget" exact component={ Forget } />
       <Route path="/msite" exact component={ Msite } />
+      <Route path="/shop" exact component={ Shop } />
       <Redirect exact to='/home' from='/' />
     </Switch>
   </CSSTransition>

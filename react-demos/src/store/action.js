@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-19 19:05:49
- * @LastEditTime: 2020-08-31 10:34:50
+ * @LastEditTime: 2020-09-03 20:05:40
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -13,8 +13,8 @@ import * as action from './action-type'
 import { setStore, removeStore, clearStore } from '@/utils/commons'
 
 export const saveUserInfo = userInfo => {
-  setStore('userInfo',JSON.stringify(userInfo))
-  setStore('user_id',userInfo.user_id)
+  setStore('userInfo', JSON.stringify(userInfo))
+  setStore('user_id', userInfo.user_id)
   return {
     type: action.SAVE_USERINFO,
     userInfo
@@ -36,9 +36,9 @@ export const loginOut = () => {
  * 保存头像
  * @param imgPath
  */
-export const saveAvander = (imgPath) =>{
+export const saveAvander = (imgPath) => {
   return {
-    type:action.SAVE_AVANDER,
+    type: action.SAVE_AVANDER,
     imgPath
   }
 }
@@ -56,7 +56,7 @@ export const saveRemoveAddress = (removeAddress) => {
 
 /**
  * 保存新增地址
- * @param addAddress 
+ * @param addAddress
  */
 export const saveAddAddress = (addAddress) => {
   return {
@@ -67,7 +67,7 @@ export const saveAddAddress = (addAddress) => {
 
 /**
  * 添加地址
- * @param addAddress 
+ * @param addAddress
  */
 export const saveAddDetail = addAddress => {
   return {
@@ -78,7 +78,7 @@ export const saveAddDetail = addAddress => {
 
 /**
  * 保存添加地址页面状态
- * @param address 
+ * @param address
  */
 export const saveAddressPage = address => {
   return {
@@ -89,7 +89,7 @@ export const saveAddressPage = address => {
 
 /**
  * 修改用户的默认经纬度
- * @param {*} geohash 
+ * @param {*} geohash
  */
 export const saveUserGeohash = geohash => {
   return {
@@ -100,11 +100,22 @@ export const saveUserGeohash = geohash => {
 
 /**
  * 修改用户的默认地址
- * @param {*} address 
+ * @param {*} address
  */
 export const saveUserAddress = address => {
   return {
     type: action.SAVE_USER_ADDRESS,
     address
+  }
+}
+
+/**
+ * 清空当前商品的购物车信息
+ * @param {*} shopId
+ */
+export const clearCart = shopId => {
+  return {
+    type: action.CLEAR_CART,
+    shopId
   }
 }

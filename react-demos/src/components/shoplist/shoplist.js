@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-31 13:48:49
- * @LastEditTime: 2020-08-31 19:38:38
+ * @LastEditTime: 2020-09-02 09:08:10
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -52,7 +52,9 @@ class ShopList extends Component {
     this.hideLoading()
     // 开始监听scrollTop的值，达到一定程度后显示返回顶部按钮
     showBack(status=>{
-      this.setState({showBackStatus:status})
+      if(this.isMounted){
+        this.setState({showBackStatus:status})
+      }
     })
   }
 
@@ -180,6 +182,13 @@ class ShopList extends Component {
       this.listenPropChange()
     }
     return null;
+  }
+
+  componentWillUnmount () {
+    this.touchEnd = null
+    this.touchStart = null
+    this.listenPropChange = null
+    this.backTop = null
   }
 
   render(){

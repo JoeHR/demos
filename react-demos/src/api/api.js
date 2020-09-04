@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 19:09:59
- * @LastEditTime: 2020-08-31 16:40:42
+ * @LastEditTime: 2020-09-01 18:43:54
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -204,6 +204,54 @@ class API extends Server {
       order_by,
       'delivery_mode[]': delivery_mode + supportStr};
     return this.get('/api/shopping/restaurants',{params})
+  }
+
+  /**
+   * 获取shop页面商铺详情
+   * @param {*} shopid 
+   * @param {*} latitude 
+   * @param {*} longitude 
+   */
+  shopDetails (shopid, latitude, longitude) {
+    const url = '/api/shopping/restaurant/'+shopid
+    const params = {
+      latitude,
+      longitude:longitude + '&extras[]=activities&extras[]=album&extras[]=license&extras[]=identification&extras[]=statistics'
+    }
+    return this.get(url,{params})
+  }
+
+  /**
+   * 获取shop页面菜单列表
+   * @param {*} restaurant_id 
+   */
+  foodMenu (restaurant_id) {
+    const params = {restaurant_id}
+    return this.get('/api/shopping/v2/menu',{params})
+  }
+
+  /**
+   * 获取商铺评价列表
+   * @param {*} shopid 
+   * @param {*} offset 
+   * @param {*} tag_name 
+   */
+  getRatingList(shopid, offset, tag_name = ''){
+    const url = '/api/ugc/v2/restaurants/'+shopid+'/ratings'
+    const params = {has_content:true,offset,limit:10,tag_name}
+    return this.get(url,{params})
+  }
+
+  /**
+   * 获取商铺评价分类
+   * @param {*} shopid 
+   */
+  ratingTags (shopid) {
+    return this.get('/api/ugc/v2/restaurants/'+shopid+'/ratings/tags')
+  }
+
+  ratingScores (shopid) {
+    return this.get('/api/ugc/v2/restaurants/'+ shopid + '/ratings/scores')
   }
 }
 

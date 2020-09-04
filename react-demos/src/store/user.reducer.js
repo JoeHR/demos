@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-18 20:59:17
- * @LastEditTime: 2020-08-31 16:57:17
+ * @LastEditTime: 2020-09-03 20:28:45
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -25,31 +25,35 @@ let defaultState = {
   searchAddress: null,//搜索并选择的地址
   choosedAddress: null,//选择地址
   addressIndex: null,//选择地址的索引值
-  removeAddress:[],//移除地址
-	addAddress:'',		//新增地址
+  removeAddress: [],//移除地址
+  addAddress: '',		//新增地址
+  cartList: {},  // 加入购物车的商品列表
 }
 
-export default (state = defaultState, action = { }) => {
-  switch(action.type){
+export default (state = defaultState, action = {}) => {
+  switch (action.type) {
     case user.SAVE_USERINFO:
       return {
         ...state,
         userInfo: action.userInfo
       }
     case user.SAVE_ATTRINFO:
-      return {...state,...{[action.datatype]:action.value}}
+      return { ...state, ...{ [action.datatype]: action.value } }
     case user.MODIFY_USERINFO:
-      return {...state,userInfo: {...state.userInfo,[action.key]:action.value}}
+      return { ...state, userInfo: { ...state.userInfo, [action.key]: action.value } }
     case user.SAVE_REMOVEADDRESS:
-      return {...state,removeAddress:action.removeAddress}
+      return { ...state, removeAddress: action.removeAddress }
     case user.SAVE_ADDADDRESS:
-      return {...state,removeAddress:[action.addAddress,...state.removeAddress]}
+      return { ...state, removeAddress: [action.addAddress, ...state.removeAddress] }
     case user.SAVE_ADDDETAIL:
-      return {...state,addAddress:action.addAddress}
+      return { ...state, addAddress: action.addAddress }
     case user.SAVE_USER_GEOHASH:
-      return {...state,geohash:action.geohash}
+      return { ...state, geohash: action.geohash }
     case user.SAVE_USER_ADDRESS:
-      return {...state,...action.address}
+      return { ...state, ...action.address }
+    case user.CLEAR_CART:
+      state.cartList[action.shopId] = null
+      return { ...state, cartList: { ...state.cartList } }
     default:
       return state
   }

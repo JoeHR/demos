@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-08-28 17:18:21
- * @LastEditTime: 2020-08-31 15:39:19
+ * @LastEditTime: 2020-08-31 19:54:36
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -42,7 +42,7 @@ class Msite extends Component{
     this.props.save_user_geohash(geohash)
     // 获取位置信息
     let res = await API.msiteAddress(geohash)
-    this.msiteTitle = res.name
+    this.setState({msiteTitle:res.name})
     // 记录当前经纬度
     this.props.save_user_address(res)
 
@@ -90,7 +90,7 @@ class Msite extends Component{
     const {getCategoryId} = this
     return (
       <div>
-        <HeadTop signUp='msite' search={
+        <HeadTop signinUp='msite' search={
           <Link to='/search/geohash' className='link_search'>
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="8" cy="8" r="7" stroke="rgb(255,255,255)" strokeWidth="1" fill="none"/>
